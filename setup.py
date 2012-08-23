@@ -23,6 +23,8 @@ setup(
         "friends": [
             "templates/notification/*/*.html",
             "templates/notification/*/*.txt",
+            "templates/friends/*/*.html",
+            "templates/friends/*/*.txt",
         ]
     },
     zip_safe = False,
