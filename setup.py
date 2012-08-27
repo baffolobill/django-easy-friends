@@ -25,6 +25,7 @@ setup(
             "templates/notification/*/*.txt",
             "templates/friends/*.html",
             "templates/friends/*.txt",
+            "fixtures/*.*",
         ]
     },
     zip_safe = False,
