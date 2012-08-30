@@ -1,3 +1,4 @@
+import logging
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -102,8 +103,8 @@ def only_add_friends(sender, instance, action, reverse, model, pk_set, *args, **
     """
     friendlist = instance
     if action == 'pre_add' and not reverse and model == User:
-        for pk in pk_set:
-            friend = User.objects.get(pk=pk)
+        friends = User.objects.filter(pk__in=pk_set)
+        for friend in friends:
             if not Friendship.objects.are_friends(friendlist.owner, friend):
                 raise ValidationError("FriendList owner id %d is not friends with User id: %d" % (friendlist.id, friend.id))
 
@@ -118,12 +119,11 @@ def remove_deleted_friendships_from_list(sender, instance, **kwargs):
     user1 = instance.from_user
     user2 = instance.to_user
     
-    for user, other_user in [(user1, user2), (user2, user2)]:
+    for user, other_user in [(user1, user2), (user2, user1)]:
         lists = FriendList.objects.filter(owner=user)
         for l in lists:
-            if other_user in l.friends.all():
                 l.friends.remove(other_user)
-                
+
 pre_delete.connect(remove_deleted_friendships_from_list, sender=Friendship, dispatch_uid='friends_remove_deleted_friends_from_lists')
 
 
