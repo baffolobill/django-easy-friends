@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "django-easy-friends",
-    version = "0.2.dev1",
+    version = "0.2.2",
     description = "friendship, friendship invitation and friendship suggestion management for the Django web framework",
     author = "Maciej Marczewski",
     author_email = "maciej@marczewski.net.pl",
