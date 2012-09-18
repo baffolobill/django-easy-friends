@@ -30,6 +30,12 @@ class FriendshipManager(models.Manager):
 
 class FriendshipInvitationManager(models.Manager):
 
+    def is_invited(self, user1, user2):
+        return self.filter(
+            Q(from_user=user1, to_user=user2) |
+            Q(from_user=user2, to_user=user1)
+        ).count() > 0
+
     def remove(self, user1, user2):
         invitations = self.filter(from_user=user1, to_user=user2)
         if not invitations:
