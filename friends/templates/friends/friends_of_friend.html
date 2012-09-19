@@ -1,7 +1,7 @@
 {% extends 'friends/base.html' %}
 {% load i18n friends_tags %}
 
-{% block friends_title %}{% blocktrans %}{{ friend }}'s friends{% endblocktrans %}
+{% block friends_title %}{% blocktrans %}{{ friend }}'s friends{% endblocktrans %}{% endblock %}
 
 {% block friends_content %}
 <ul>

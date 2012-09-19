@@ -10,6 +10,7 @@ from django.core.exceptions import PermissionDenied
 from friends.models import Friendship, FriendshipInvitation, Blocking
 from friends.forms import InviteFriendForm, RemoveFriendForm, BlockUserForm
 from friends import settings as friends_settings
+from friends.signals import inviting_friend
 
 
 @login_required
@@ -55,6 +56,8 @@ def invite_friend(request, username, redirect_to_view=None, message=_("I would l
         form = InviteFriendForm(data=request.POST, user=request.user)
         if form.is_valid():
             form.save()
+            to_user = User.objects.get(username=request.POST["to_user"])
+            inviting_friend.send(FriendshipInvitation, request=request, to_user=to_user)
             messages.success(request, _("Friendship invitation for %(username)s was created.") % {'username': username}, fail_silently=True)
             if not redirect_to_view:
                 redirect_to_view = list_sent_invitations
