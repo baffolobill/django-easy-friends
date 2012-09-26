@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from friends.utils import get_datetime_now
 from friends.managers import FriendshipManager, FriendshipInvitationManager, BlockingManager
 from friends import settings as friends_settings
-from profiles import start_listening
 
 
 class Friendship(models.Model):
@@ -127,8 +126,6 @@ def remove_deleted_friendships_from_list(sender, instance, **kwargs):
 
 pre_delete.connect(remove_deleted_friendships_from_list, sender=Friendship, dispatch_uid='friends_remove_deleted_friends_from_lists')
 
-# Start Listening signal
-start_listening()
 
 # signals receivers to send notifications
 
