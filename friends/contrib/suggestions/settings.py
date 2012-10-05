@@ -31,3 +31,8 @@ RUNNER = map_to_attr(
     "FRIENDS_SUGGESTIONS_IMPORT_RUNNER",
     "friends.contrib.suggestions.backends.runners.SynchronousRunner"
 )
+
+SUPPORTED_BACKENDS = (
+    'google',
+    'yahoo',
+)

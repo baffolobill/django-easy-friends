@@ -110,6 +110,10 @@ Configuration
 =============
 Available settings:
 
+``SUPPORTED_BACKENDS`` (default: ``google,yahoo``)
+This is a list of supported services to import contacts from. By default facebook and twitter are not included, 
+To include them install the dependencies packages and add them i.e ``facebook,twitter`` to the settings file in friends/contrib/suggestions
+
 ``FRIENDS_SUGGESTIONS_IMPORT_RUNNER`` (default: ``friends.contrib.suggestions.backends.runners.SynchronousRunner``)
   This is class that is used for importing contacts. Default is synchronous runner but you should really use `Celery <http://celeryproject.org/>`_ (and `django-celery <http://ask.github.com/django-celery/>`_) so this setting should be set to ``friends.contrib.suggestions.backends.runners.AsyncRunner``.
 
