@@ -5,12 +5,12 @@ from django.utils import simplejson as json
 from django.core.exceptions import ImproperlyConfigured
 
 from friends.contrib.suggestions.backends.runners import AsyncRunner
-from friends.contrib.suggestions.settings import RUNNER,supported_backends
+from friends.contrib.suggestions.settings import RUNNER, SUPPORTED_BACKENDS
 from friends.contrib.suggestions.models import FriendshipSuggestion
 
-if 'facebook' in supported_backends:
+if 'facebook' in SUPPORTED_BACKENDS:
     import facebook
-if 'twitter' in supported_backends:
+if 'twitter' in SUPPORTED_BACKENDS:
     import twitter
 
 # determine the base class based on what type of importing should be done
