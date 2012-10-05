@@ -109,9 +109,14 @@ def import_contacts(request,
     if not extra_context:
         extra_context = dict()
     extra_context['import_in_progress'] = import_in_progress
-    return render_to_response(template_name,
-                              extra_context,
-                              context_instance=RequestContext(request))
+
+#   New custom return statement
+    return HttpResponseRedirect(reverse("share_contacts"))
+
+#   Commented this original code to integrate the contact import flow with project
+#    return render_to_response(template_name,
+#                              extra_context,
+#                              context_instance=RequestContext(request))
 
 
 def import_google_contacts(request, redirect_to=None):
