@@ -133,7 +133,7 @@ def import_google_contacts(request, redirect_to=None):
                                                        scope='http://www.google.com/m8/feeds/',
                                                        secure=False,
                                                        session=True)
-    return HttpResponseRedirect(authsub_url)
+    return HttpResponseRedirect(authsub_url.to_string())
 
 
 @login_required
