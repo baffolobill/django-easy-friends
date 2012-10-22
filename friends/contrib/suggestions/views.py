@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from gdata.contacts.service import ContactsService
 
@@ -45,7 +46,7 @@ def _import_status(request, results):
 
 @login_required
 def import_contacts(request,
-                    template_name="friends/suggestions/import_contacts.html",
+                    template_name="profiles/share.html",
                     extra_context=None):
     """
     If there is import_contacts_task_id in session pop it up and show info about
@@ -73,6 +74,7 @@ def import_contacts(request,
                                   authsub_token=google_authsub_token)
             results = runner.import_contacts()
             import_in_progress = not _import_status(request, results)
+            provider = 'gmail'
 
         facebook_token = request.session.pop("facebook_token", None)
         if facebook_token:
@@ -81,6 +83,7 @@ def import_contacts(request,
                                   facebook_token=facebook_token)
             results = runner.import_contacts()
             import_in_progress = not _import_status(request, results)
+            provider = 'facebook'
 
         twitter_token = request.session.pop("twitter_token", None)
         if twitter_token:
@@ -89,6 +92,7 @@ def import_contacts(request,
                                   twitter_token=twitter_token)
             results = runner.import_contacts()
             import_in_progress = not _import_status(request, results)
+            provider = 'twitter'
 
         yahoo_token = request.session.pop("yahoo_token", None)
         if yahoo_token:
@@ -97,6 +101,7 @@ def import_contacts(request,
                                   yahoo_token=yahoo_token)
             results = runner.import_contacts()
             import_in_progress = not _import_status(request, results)
+            provider = 'yahoo'
 
         linkedin_token = request.session.pop("linkedin_token", None)
         if linkedin_token:
@@ -105,13 +110,14 @@ def import_contacts(request,
                                   linkedin_token=linkedin_token)
             results = runner.import_contacts()
             import_in_progress = not _import_status(request, results)
+            provider = 'linkedin'
 
     if not extra_context:
         extra_context = dict()
     extra_context['import_in_progress'] = import_in_progress
-
+    
 #   New custom return statement
-    return HttpResponseRedirect(reverse("share_contacts"))
+    return HttpResponseRedirect(settings.SHARE_CONTACTS_REDIRECT_URL+'?provider='+provider)
 
 #   Commented this original code to integrate the contact import flow with project
 #    return render_to_response(template_name,
