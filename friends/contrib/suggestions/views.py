@@ -13,7 +13,7 @@ from gdata.contacts.service import ContactsService
 
 from friends.contrib.suggestions.backends.importers import GoogleImporter, FacebookImporter, TwitterImporter, YahooImporter, LinkedInImporter
 from friends.contrib.suggestions.settings import RUNNER
-from friends.contrib.suggestions.models import FriendshipSuggestion
+from friends.contrib.suggestions.models import FriendshipSuggestion,ImportedContact
 
 
 @login_required
@@ -57,6 +57,7 @@ def import_contacts(request,
     """
 
     import_in_progress = False
+    ImportedContact.objects.filter(owner = request.user).delete()
 
     import_contacts_task_id = request.session.pop("import_contacts_task_id", None)
     if import_contacts_task_id:
@@ -115,11 +116,7 @@ def import_contacts(request,
     if not extra_context:
         extra_context = dict()
     extra_context['import_in_progress'] = import_in_progress
-    
-#   New custom return statement
     return HttpResponseRedirect(settings.SHARE_CONTACTS_REDIRECT_URL+'?provider='+provider)
-
-#   Commented this original code to integrate the contact import flow with project
 #    return render_to_response(template_name,
 #                              extra_context,
 #                              context_instance=RequestContext(request))
@@ -139,7 +136,7 @@ def import_google_contacts(request, redirect_to=None):
                                                        scope='http://www.google.com/m8/feeds/',
                                                        secure=False,
                                                        session=True)
-    return HttpResponseRedirect(authsub_url.to_string())
+    return HttpResponseRedirect(authsub_url)
 
 
 @login_required
