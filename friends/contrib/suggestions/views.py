@@ -116,7 +116,7 @@ def import_contacts(request,
     if not extra_context:
         extra_context = dict()
     extra_context['import_in_progress'] = import_in_progress
-    return HttpResponseRedirect(settings.SHARE_CONTACTS_REDIRECT_URL+'?provider='+provider)
+    return HttpResponseRedirect(settings.SHARE_CONTACTS_REDIRECT_URL+'?provider='+provider+'#import_list_id')
 #    return render_to_response(template_name,
 #                              extra_context,
 #                              context_instance=RequestContext(request))
