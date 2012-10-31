@@ -32,7 +32,7 @@ class ImportedContact(models.Model):
     # user who imported this contact
     owner = models.ForeignKey(User, verbose_name=_("owner"), related_name="imported_contacts")
 
-    name = models.CharField(_("name"), max_length=100, null=True, blank=True)
+    name = models.CharField(_("name"), max_length=255, null=True, blank=True)
     # Facebook does not give emails of user friends so email can be blank and
     # matching should be done using only name
     email = models.EmailField(_("email"), null=True, blank=True)
