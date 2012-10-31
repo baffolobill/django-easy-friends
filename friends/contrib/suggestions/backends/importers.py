@@ -34,7 +34,7 @@ class BaseImporter(Task):
             status = persistance.persist(contact, status, credentials)
 
         # find suggestions using all user imported contacts
-        status["suggestions"] = FriendshipSuggestion.objects.create_suggestions_for_user_using_imported_contacts(credentials["user"])
+        #status["suggestions"] = FriendshipSuggestion.objects.create_suggestions_for_user_using_imported_contacts(credentials["user"])
         return status
 
 
