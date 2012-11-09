@@ -35,7 +35,7 @@ class ImportedContact(models.Model):
     name = models.CharField(_("name"), max_length=255, null=True, blank=True)
     # Facebook does not give emails of user friends so email can be blank and
     # matching should be done using only name
-    email = models.EmailField(_("email"), null=True, blank=True)
+    email = models.EmailField(_("email"), null=True, blank=True, max_length=255)
 
     added = models.DateTimeField(_("added"), default=get_datetime_now)
 
