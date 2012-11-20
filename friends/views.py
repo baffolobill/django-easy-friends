@@ -10,7 +10,7 @@ from django.core.exceptions import PermissionDenied
 from friends.models import Friendship, FriendshipInvitation, Blocking
 from friends.forms import InviteFriendForm, RemoveFriendForm, BlockUserForm
 from friends import settings as friends_settings
-from friends.signals import inviting_friend
+from friends.signals import inviting_friend, accepting_friend
 
 
 @login_required
@@ -208,6 +208,7 @@ def respond_to_invitation(request, invitation_id, resp='a', redirect_to_view=Non
     )
     if resp == 'a':
         invitation.accept()
+        accepting_friend.send(FriendshipInvitation, request=request, invite=invitation)
         messages.success(request, _("Invitation accepted."), fail_silently=True)
     elif resp == 'd':
         invitation.decline()
