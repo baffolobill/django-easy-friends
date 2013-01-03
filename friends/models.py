@@ -17,7 +17,7 @@ class Friendship(models.Model):
     have both agreed to the association.
     """
 
-    from_user = models.ForeignKey(User, verbose_name=_("from user"), related_name="_unused_")
+    from_user = models.ForeignKey(User, verbose_name=_("from user"), related_name="_unused")
     to_user = models.ForeignKey(User, verbose_name=_("to user"), related_name="friends")
     added = models.DateTimeField(_("added"), default=get_datetime_now)
 
