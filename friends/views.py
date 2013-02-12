@@ -61,7 +61,8 @@ def invite_friend(request, username, redirect_to_view=None, message=_("I would l
             messages.success(request, _("Friendship invitation for %(username)s was created.") % {'username': username}, fail_silently=True)
             if not redirect_to_view:
                 redirect_to_view = list_sent_invitations
-            return redirect(redirect_to_view)
+            #return redirect(redirect_to_view)
+            return redirect_to_view(request)
     else:
         form = InviteFriendForm(initial={'to_user': username, 'message': message})
     return render_to_response('friends/friend_invite.html',
@@ -83,7 +84,8 @@ def remove_friend(request, username, redirect_to_view=None):
             messages.success(request, _("User %(username)s was removed from friends.") % {'username': username}, fail_silently=True)
             if not redirect_to_view:
                 redirect_to_view = list_friends
-            return redirect(redirect_to_view)
+            #return redirect(redirect_to_view)
+            return redirect_to_view(request)
     else:
         form = RemoveFriendForm(initial={'to_user': username})
     return render_to_response('friends/friend_remove.html',
@@ -194,7 +196,8 @@ def remove_invitation(request, invitation_id, redirect_to_view=None):
     messages.success(request, _("Invitation deleted."), fail_silently=True)
     if not redirect_to_view:
         redirect_to_view = list_friends
-    return redirect(redirect_to_view)
+    #return redirect(redirect_to_view)
+    return redirect_to_view(request)
 
 
 @login_required
